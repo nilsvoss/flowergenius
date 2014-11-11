@@ -38,9 +38,14 @@ public class ExtractFeatures {
 						System.out.println(filename);
 						for (int i=0; i<fv.length; i++) {
 							System.out.print(fv[i]);
+							if (i < fv.length - 1) {
+								System.out.print(" ");
+							}
 						}
 						System.out.println();
 					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}					
 				}
 				
