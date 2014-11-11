@@ -36,6 +36,10 @@ public class ExtractFeatures {
 						int[] pixels = im.getRGB(0, 0, im.getWidth(), im.getHeight(), null, 0, im.getWidth());
 						double[] fv = cd.getFeatureVector(pixels);
 						System.out.println(filename);
+						for (int i=0; i<fv.length; i++) {
+							System.out.print(fv[i]);
+						}
+						System.out.println();
 					} catch (IOException e) {
 					}					
 				}
