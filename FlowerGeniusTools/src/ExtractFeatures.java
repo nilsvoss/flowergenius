@@ -18,14 +18,15 @@ public class ExtractFeatures {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/fsinb?user=fsinb&password=DxszzrXAwU8GmXmz");
-			Statement statement = connect.createStatement();
-
-			ResultSet objects = statement.executeQuery("SELECT DISTINCT objectid FROM weights");
+			
+			Statement st1 = connect.createStatement();
+			ResultSet objects = st1.executeQuery("SELECT DISTINCT objectid FROM weights");
 			
 			while (objects.next()) {
 				int id = objects.getInt("objectid");
 				
-				ResultSet pictures = statement.executeQuery("SELECT DISTINCT filename "+
+				Statement st2 = connect.createStatement();
+				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename "+
 						"FROM pictures WHERE objectid="+id+" AND suitability>0");
 				
 				while (pictures.next()) {
@@ -48,6 +49,8 @@ public class ExtractFeatures {
 						e.printStackTrace();
 					}					
 				}
+				
+				st2.close();
 				
 			}
 			
