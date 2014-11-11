@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.fsinb.hal3000"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:name="FlowerApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.NoActionBar" >
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.DatabaseActivity"
+            android:label="@string/title_activity_database"
+            android:parentActivityName="com.tsc.FlowerGenius.gui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.fsinb.hal3000.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.SnapActivity"
+            android:label="@string/title_activity_snap"
+            android:parentActivityName="com.tsc.FlowerGenius.gui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.fsinb.hal3000.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.ResultsActivity"
+            android:label="@string/title_activity_results"
+            android:parentActivityName="com.tsc.FlowerGenius.gui.SnapActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.fsinb.hal3000.SnapActivity" />
+        </activity>
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.DetailActivity"
+            android:label="@string/title_activity_detail" >
+        </activity>
+    </application>
+
+</manifest>
