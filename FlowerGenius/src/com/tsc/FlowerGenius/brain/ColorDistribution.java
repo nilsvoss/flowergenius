@@ -1,8 +1,5 @@
 package com.tsc.FlowerGenius.brain;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 public class ColorDistribution {
 	
 	public int[][][] getAbsBins(int binsPerChannel, int[] pixels) {
