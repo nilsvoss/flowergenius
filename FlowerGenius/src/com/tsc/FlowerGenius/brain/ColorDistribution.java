@@ -2,6 +2,8 @@ package com.tsc.FlowerGenius.brain;
 
 public class ColorDistribution {
 	
+	private static int BINS_PER_CHANNEL = 7;
+	
 	public int[][][] getAbsBins(int binsPerChannel, int[] pixels) {
 		int n = binsPerChannel;
 		int[][][] bins = new int[n][n][n];
@@ -28,8 +30,12 @@ public class ColorDistribution {
 		return relBins;
 	}
 	
+	public int getFvSize() {
+		return BINS_PER_CHANNEL*BINS_PER_CHANNEL*BINS_PER_CHANNEL;
+	}
+	
 	public double[] getFeatureVector(int[] pixels) {
-		int n = 7;
+		int n = BINS_PER_CHANNEL;
 		double[][][] relBins = getRelBins(n, pixels);
 		double[] fv = new double[n*n*n];
 		int c = 0;
