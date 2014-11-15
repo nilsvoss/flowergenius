@@ -22,34 +22,45 @@ public class ExtractFeatures {
 			Statement st1 = connect.createStatement();
 			ResultSet objects = st1.executeQuery("SELECT DISTINCT objectid FROM weights");
 			
+			ColorDistribution cd = new ColorDistribution();
+			
 			while (objects.next()) {
-				int id = objects.getInt("objectid");
 				
+				int id = objects.getInt("objectid");
 				Statement st2 = connect.createStatement();
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename "+
 						"FROM pictures WHERE objectid="+id+" AND suitability>0");
-				
-				
+				double[] meanFv = new double[cd.getFvSize()];
+				int c = 0;
 				
 				while (pictures.next()) {
+					
 					String filename = "/home/ts/fsinb/pictures/" + pictures.getString("filename");
 					try {
 						BufferedImage im = ImageIO.read(new File(filename));
-						ColorDistribution cd = new ColorDistribution();
 						int[] pixels = im.getRGB(0, 0, im.getWidth(), im.getHeight(), null, 0, im.getWidth());
 						double[] fv = cd.getFeatureVector(pixels);
 						System.out.println(filename);
+						c++;
 						for (int i=0; i<fv.length; i++) {
-							System.out.print(fv[i]);
-							if (i < fv.length - 1) {
-								System.out.print(" ");
-							}
+							meanFv[i] += fv[i];
 						}
 						System.out.println();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}					
+					}
+					
+				}
+				
+				for (int i=0; i<meanFv.length; i++) {
+					meanFv[i] = meanFv[i] / (double) c;
+					System.out.println(meanFv[i]);
+					if (i == meanFv.length - 1) {
+						System.out.println();
+					} else {
+						System.out.println("\t");
+					}
 				}
 				
 				st2.close();
