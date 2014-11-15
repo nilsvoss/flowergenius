@@ -59,7 +59,7 @@ public class ExtractFeatures {
 					if (i == meanFv.length - 1) {
 						System.out.println();
 					} else {
-						System.out.println("\t");
+						System.out.print("\t");
 					}
 				}
 				
