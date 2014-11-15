@@ -29,6 +29,8 @@ public class ExtractFeatures {
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename "+
 						"FROM pictures WHERE objectid="+id+" AND suitability>0");
 				
+				
+				
 				while (pictures.next()) {
 					String filename = "/home/ts/fsinb/pictures/" + pictures.getString("filename");
 					try {
