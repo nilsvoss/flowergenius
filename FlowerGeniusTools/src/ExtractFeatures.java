@@ -45,7 +45,6 @@ public class ExtractFeatures {
 						for (int i=0; i<fv.length; i++) {
 							meanFv[i] += fv[i];
 						}
-						System.out.println();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -55,7 +54,7 @@ public class ExtractFeatures {
 				
 				for (int i=0; i<meanFv.length; i++) {
 					meanFv[i] = meanFv[i] / (double) c;
-					System.out.println(meanFv[i]);
+					System.out.print(meanFv[i]);
 					if (i == meanFv.length - 1) {
 						System.out.println();
 					} else {
