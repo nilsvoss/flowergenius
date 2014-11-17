@@ -51,19 +51,19 @@ public class ExtractFeatures {
 					
 				}
 				
-				System.out.print(id + "\t");
-				System.out.print(ids.getString("botname1") + "\t");
-				System.out.print(ids.getString("gername1") + "\t");
+				System.out.print(id + ";");
+				System.out.print(ids.getString("botname1") + ";");
+				System.out.print(ids.getString("gername1") + ";");
 				
 				for (int i=0; i<meanFv.length; i++) {
 					meanFv[i] = meanFv[i] / (double) c;
 					System.out.print(meanFv[i]);
-					if (i == meanFv.length - 1) {
-						System.out.println();
-					} else {
-						System.out.print("\t");
+					if (i < (meanFv.length - 1)) {
+						System.out.print(";");
 					}
 				}
+				
+				System.out.println();
 				
 				st2.close();
 				
