@@ -3,7 +3,7 @@ package com.tsc.FlowerGenius.gui;
 import java.io.IOException;
 import java.util.List;
 
-import de.fsinb.hal3000.R;
+import com.tsc.FlowerGenius.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

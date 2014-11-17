@@ -3,7 +3,7 @@ package com.tsc.FlowerGenius.gui;
 import java.io.IOException;
 import java.io.InputStream;
 
-import de.fsinb.hal3000.R;
+import com.tsc.FlowerGenius.R;
 
 import android.app.Activity;
 import android.content.Intent;

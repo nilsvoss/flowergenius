@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.tsc.FlowerGenius.brain.Flower;
 
-import de.fsinb.hal3000.R;
+import com.tsc.FlowerGenius.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;

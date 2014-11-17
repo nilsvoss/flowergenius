@@ -6,7 +6,7 @@ import com.tsc.FlowerGenius.brain.DummyRecognizer;
 import com.tsc.FlowerGenius.brain.Flower;
 import com.tsc.FlowerGenius.brain.Recognizer;
 
-import de.fsinb.hal3000.R;
+import com.tsc.FlowerGenius.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

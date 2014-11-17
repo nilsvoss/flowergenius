@@ -2,7 +2,7 @@ package com.tsc.FlowerGenius.brain;
 
 public class ColorDistribution {
 	
-	private static int BINS_PER_CHANNEL = 7;
+	public static final int BINS_PER_CHANNEL = 7;
 	
 	public int[][][] getAbsBins(int binsPerChannel, int[] pixels) {
 		int n = binsPerChannel;
