@@ -40,7 +40,6 @@ public class ExtractFeatures {
 						BufferedImage im = ImageIO.read(new File(filename));
 						int[] pixels = im.getRGB(0, 0, im.getWidth(), im.getHeight(), null, 0, im.getWidth());
 						double[] fv = cd.getFeatureVector(pixels);
-						System.out.println(filename);
 						c++;
 						for (int i=0; i<fv.length; i++) {
 							meanFv[i] += fv[i];
