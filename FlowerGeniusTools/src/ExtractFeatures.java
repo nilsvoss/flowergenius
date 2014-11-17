@@ -26,12 +26,12 @@ public class ExtractFeatures {
 			
 			while (ids.next()) {
 				
-				int id = ids.getInt("objectid");
-				Statement st2 = connect.createStatement();
-				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename "+
-						"FROM pictures WHERE objectid="+id+" AND suitability>0");
-				double[] meanFv = new double[cd.getFvSize()];
 				int c = 0;
+				int id = ids.getInt("objectid");
+				double[] meanFv = new double[cd.getFvSize()];
+				
+				Statement st2 = connect.createStatement();
+				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" AND suitability>0");
 				
 				while (pictures.next()) {
 					
@@ -51,6 +51,7 @@ public class ExtractFeatures {
 					
 				}
 				
+				System.out.print(id + "\t");
 				System.out.print(ids.getString("botname1") + "\t");
 				System.out.print(ids.getString("gername1") + "\t");
 				
