@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class ResultsActivity extends Activity {
@@ -26,10 +27,16 @@ public class ResultsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_results);
+		
+		final ImageView imageView1 = (ImageView) findViewById(R.id.imageView1);
+		
 		Bundle b = getIntent().getExtras();
 		//int[] pixels = b.getIntArray("pixels");
 		byte[] jpg = b.getByteArray("jpgData");
 		Bitmap im = BitmapFactory.decodeByteArray(jpg, 0, jpg.length);
+		
+		imageView1.setImageBitmap(im);
+		
 		int[] pixels = new int[im.getHeight() * im.getWidth()];
 		im.getPixels(pixels, 0, im.getWidth(), 0, 0, im.getWidth(), im.getHeight());
 		int centerX = b.getInt("centerX");

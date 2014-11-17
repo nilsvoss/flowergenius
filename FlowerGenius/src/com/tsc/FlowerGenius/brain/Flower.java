@@ -45,7 +45,7 @@ public class Flower {
         int o = 3;//offset in fields list
         double[] vector = new double[n*n*n];
         for (int i=0; i<n*n*n; i++) {
-            vector[i] = Double.valueOf(fields[i+o]);   
+            vector[i] = Double.parseDouble(fields[i+o]);   
         }
         return vector;
     }
