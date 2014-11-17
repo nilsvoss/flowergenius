@@ -20,13 +20,13 @@ public class ExtractFeatures {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/fsinb?user=fsinb&password=DxszzrXAwU8GmXmz");
 			
 			Statement st1 = connect.createStatement();
-			ResultSet objects = st1.executeQuery("SELECT DISTINCT objectid,botname1,gername1 FROM weights");
+			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid,o.botname1,o.gername1 FROM weights w JOIN objects o ON (w.objectid=o.id)");
 			
 			ColorDistribution cd = new ColorDistribution();
 			
-			while (objects.next()) {
+			while (ids.next()) {
 				
-				int id = objects.getInt("objectid");
+				int id = ids.getInt("objectid");
 				Statement st2 = connect.createStatement();
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename "+
 						"FROM pictures WHERE objectid="+id+" AND suitability>0");
@@ -52,8 +52,8 @@ public class ExtractFeatures {
 					
 				}
 				
-				System.out.print(objects.getString("botname1") + "\t");
-				System.out.print(objects.getString("gername1") + "\t");
+				System.out.print(ids.getString("botname1") + "\t");
+				System.out.print(ids.getString("gername1") + "\t");
 				
 				for (int i=0; i<meanFv.length; i++) {
 					meanFv[i] = meanFv[i] / (double) c;
