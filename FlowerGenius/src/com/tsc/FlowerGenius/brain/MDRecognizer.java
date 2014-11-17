@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
 
 
 
@@ -26,12 +28,22 @@ public class MDRecognizer implements Recognizer {
 		
 		int n = list.size();
 		
-        double[] fv = (new ColorDistribution()).getFeatureVector(pixels);
+        double[] sampleFv = (new ColorDistribution()).getFeatureVector(pixels);
+        
+        Log.d("MD", "number of sample pixels: "+pixels.length);
+        Log.d("MD", "number of sample features: "+sampleFv.length);
+        
         FlowerDistance[] fd = new FlowerDistance[n];
         
         for (int i=0; i<n; i++) {
-            fd[i].distance = Functions.distance(fv,list.get(i).getFeatureVector());    
+        	
+        	double[] classFv = list.get(i).getFeatureVector();
+        	fd[i] = new FlowerDistance();
+            fd[i].distance = Functions.distance(sampleFv,classFv);    
             fd[i].flower = list.get(i);
+            
+            Log.d("MD", "number of class i="+i+" features: "+classFv.length);
+            Log.d("MD", "distance to class i="+i+" is "+fd[i].distance);
         }
 
         Arrays.sort(fd, new Comparator<FlowerDistance>() {

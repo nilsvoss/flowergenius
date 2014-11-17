@@ -13,7 +13,7 @@ public class Flower {
 	private String[] fields;
     
     public Flower(String line) {
-        fields = line.split("\t");
+        fields = line.split(";");
     }
 
 	public int getId() {
@@ -43,9 +43,9 @@ public class Flower {
     public double[] getFeatureVector() {
         int n = ColorDistribution.BINS_PER_CHANNEL; //number of features
         int o = 3;//offset in fields list
-        double[] vector = new double[n];
-        for (int i=0; i<n; i++) {
-            vector[i] = Double.parseDouble(fields[i+o]);   
+        double[] vector = new double[n*n*n];
+        for (int i=0; i<n*n*n; i++) {
+            vector[i] = Double.valueOf(fields[i+o]);   
         }
         return vector;
     }

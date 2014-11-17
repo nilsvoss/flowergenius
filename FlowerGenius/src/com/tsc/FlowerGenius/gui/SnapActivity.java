@@ -9,8 +9,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +26,9 @@ import android.view.MotionEvent;
 
 public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 
-	private Camera mCamera;
+	private Camera camera;
+	private Bitmap im;
+	private Intent resultsIntent;
 
 	@SuppressLint("ClickableViewAccessibility")
 	@SuppressWarnings("deprecation")
@@ -43,23 +49,41 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 				case MotionEvent.ACTION_DOWN:
 					break;
 				case MotionEvent.ACTION_UP:
-					// float x = event.getX();
-					// float y = event.getY();
-					Intent intent = new Intent(view.getContext(), ResultsActivity.class);
-					Bundle b = new Bundle();
-					b.putIntArray("pixels", new int[100]);
-					b.putInt("width", 10);
-					b.putInt("height", 10);
-					b.putInt("centerX", 5);
-					b.putInt("centerY", 5);
-					intent.putExtras(b);
-					startActivityForResult(intent, 0);
+					camera.takePicture(shutterCallback, pictureCallbackRAW, pictureCallbackJPG);
+					resultsIntent = new Intent(view.getContext(), ResultsActivity.class);
+					//float x = event.getX();
+					//float y = event.getY();
 					break;
 				}
 				return true;
 			}
 		});
 	}
+	
+	ShutterCallback shutterCallback = new ShutterCallback(){
+		@Override
+		public void onShutter() {
+		}
+	};
+	
+	PictureCallback pictureCallbackRAW = new PictureCallback(){
+		@Override
+		public void onPictureTaken(byte[] arg0, Camera arg1) {
+		}
+	};
+	
+	PictureCallback pictureCallbackJPG = new PictureCallback(){
+		@Override
+		public void onPictureTaken(byte[] arg0, Camera arg1) {
+			Bundle b = new Bundle();
+			b.putByteArray("jpgData", arg0);
+			//b.putIntArray("pixels", pixels);
+			b.putInt("centerX", 5);
+			b.putInt("centerY", 5);
+			resultsIntent.putExtras(b);
+			startActivityForResult(resultsIntent, 0);
+		}
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +107,7 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {       
-	    Parameters parameters = mCamera.getParameters();
+	    Parameters parameters = camera.getParameters();
 	    List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
 	    Camera.Size previewSize = previewSizes.get(0);
 
@@ -91,31 +115,31 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 	    parameters.setFlashMode(Parameters.FLASH_MODE_AUTO);
 	    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
 
-	    mCamera.setParameters(parameters);
+	    camera.setParameters(parameters);
 
 	    //Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
 	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        mCamera.setDisplayOrientation(90);
-	    mCamera.startPreview();
+        camera.setDisplayOrientation(90);
+	    camera.startPreview();
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// The Surface has been created, acquire the camera and tell it where
 		// to draw the preview.
-		mCamera = Camera.open();
+		camera = Camera.open();
 		try {
-			mCamera.setPreviewDisplay(holder);
+			camera.setPreviewDisplay(holder);
 		} catch (IOException exception) {
-			mCamera.release();
-			mCamera = null;
+			camera.release();
+			camera = null;
 		}
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		mCamera.stopPreview();
-		mCamera.release();
-		mCamera = null;
+		camera.stopPreview();
+		camera.release();
+		camera = null;
 	}
 
 }
