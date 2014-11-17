@@ -20,7 +20,7 @@ public class ExtractFeatures {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/fsinb?user=fsinb&password=DxszzrXAwU8GmXmz");
 			
 			Statement st1 = connect.createStatement();
-			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid,o.botname1,o.gername1 FROM weights w JOIN objects o ON (w.objectid=o.id)");
+			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid,o.botname1,o.gername1 FROM weights w JOIN objects o ON (w.objectid=o.id) ORDER BY o.botname1");
 			
 			ColorDistribution cd = new ColorDistribution();
 			
