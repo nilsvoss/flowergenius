@@ -39,15 +39,14 @@ public class FetchImages {
 				int id = ids.getInt("objectid");
 			
 				Statement st2 = connect.createStatement();
-				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" ORDER BY suitability DESC");
+				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" ORDER BY suitability DESC LIMIT 1");
 			
 				while (pictures.next()) {
 				
-					String filename = pictures.getString("filename");
-					System.out.println("object: "+id+" image: "+filename);
-				
+					String filename = pictures.getString("filename");				
 					String srcFilename = SRC_DIR + filename;
 					String dstFilename = SRC_DIR + id + ".jpg";
+					System.out.println("object: "+id+" image: "+srcFilename+", "+dstFilename);
 				
 					BufferedImage im1 = ImageIO.read(new File(srcFilename));
 				
