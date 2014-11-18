@@ -17,6 +17,7 @@ public class FetchImages {
 	private static final String SRC_DIR = "/home/ts/fsinb/pictures/";
 	private static final String DST_DIR = "/home/ts/flower/FlowerGenius/assets/images/";
 	private static final int SMALL_SIZE = 512;
+	private static final int TINY_SIZE = 120;
 
 	/**
 	 * @param args
@@ -45,17 +46,24 @@ public class FetchImages {
 				
 					String filename = pictures.getString("filename");				
 					String srcFilename = SRC_DIR + filename;
-					String dstFilename = DST_DIR + id + ".jpg";
-					System.out.println("object: "+id+" image: "+srcFilename+", "+dstFilename);
+					String dstFilenameS = DST_DIR + id + ".jpg";
+					String dstFilenameT = DST_DIR + id + "_120.jpg";
+					System.out.println("object: "+id+" image: "+srcFilename+", "+dstFilenameS);
 				
 					BufferedImage im1 = ImageIO.read(new File(srcFilename));
 				
 					BufferedImage im2 = new BufferedImage(SMALL_SIZE, SMALL_SIZE, BufferedImage.TYPE_INT_RGB);
-					Graphics g = im2.createGraphics();
-					g.drawImage(im1, 0, 0, SMALL_SIZE, SMALL_SIZE, null);
-					g.dispose();
+					Graphics g2 = im2.createGraphics();
+					g2.drawImage(im1, 0, 0, SMALL_SIZE, SMALL_SIZE, null);
+					g2.dispose();
+					
+					BufferedImage im3 = new BufferedImage(TINY_SIZE, TINY_SIZE, BufferedImage.TYPE_INT_RGB);
+					Graphics g3 = im3.createGraphics();
+					g3.drawImage(im1, 0, 0, TINY_SIZE, TINY_SIZE, null);
+					g3.dispose();
 				
-					ImageIO.write(im2, "jpg", new File(dstFilename));
+					ImageIO.write(im2, "jpg", new File(dstFilenameS));
+					ImageIO.write(im3, "jpg", new File(dstFilenameT));
 				
 				}
 			
