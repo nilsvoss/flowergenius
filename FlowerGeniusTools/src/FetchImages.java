@@ -45,7 +45,7 @@ public class FetchImages {
 				
 					String filename = pictures.getString("filename");				
 					String srcFilename = SRC_DIR + filename;
-					String dstFilename = SRC_DIR + id + ".jpg";
+					String dstFilename = DST_DIR + id + ".jpg";
 					System.out.println("object: "+id+" image: "+srcFilename+", "+dstFilename);
 				
 					BufferedImage im1 = ImageIO.read(new File(srcFilename));
