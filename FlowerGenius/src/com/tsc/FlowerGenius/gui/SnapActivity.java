@@ -1,6 +1,11 @@
 package com.tsc.FlowerGenius.gui;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.tsc.FlowerGenius.R;
@@ -75,13 +80,24 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 	PictureCallback pictureCallbackJPG = new PictureCallback(){
 		@Override
 		public void onPictureTaken(byte[] arg0, Camera arg1) {
-			Bundle b = new Bundle();
-			b.putByteArray("jpgData", arg0);
-			//b.putIntArray("pixels", pixels);
-			b.putInt("centerX", 5);
-			b.putInt("centerY", 5);
-			resultsIntent.putExtras(b);
-			startActivityForResult(resultsIntent, 0);
+			try {
+				String dtString = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime());
+				File outputDir = getBaseContext().getCacheDir();
+				File outputFile = File.createTempFile(dtString, "jpg", outputDir);
+				FileOutputStream outputStream = new FileOutputStream(outputFile);
+				outputStream.write(arg0);
+				outputStream.close();
+				Bundle b = new Bundle();
+				b.putString("jpgDataFile", dtString+".jpg");
+				//b.putIntArray("pixels", pixels);
+				b.putInt("centerX", 5);
+				b.putInt("centerY", 5);
+				resultsIntent.putExtras(b);
+				startActivityForResult(resultsIntent, 0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	};
 
