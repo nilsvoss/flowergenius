@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import javax.imageio.ImageIO;
 
-import com.tsc.FlowerGenius.brain.ColorDistribution;
+import com.tsc.FlowerGenius.brain.ImageFeatures;
 
 
 public class ExtractFeatures {
@@ -22,13 +22,11 @@ public class ExtractFeatures {
 			Statement st1 = connect.createStatement();
 			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid,o.botname1,o.gername1 FROM weights w JOIN objects o ON (w.objectid=o.id) ORDER BY o.botname1");
 			
-			ColorDistribution cd = new ColorDistribution();
-			
 			while (ids.next()) {
 				
 				int c = 0;
 				int id = ids.getInt("objectid");
-				double[] meanFv = new double[cd.getFvSize()];
+				double[] meanFv = null;
 				
 				Statement st2 = connect.createStatement();
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" AND suitability>0");
@@ -37,13 +35,23 @@ public class ExtractFeatures {
 					
 					String filename = "/home/ts/fsinb/pictures/" + pictures.getString("filename");
 					try {
+						
 						BufferedImage im = ImageIO.read(new File(filename));
 						int[] pixels = im.getRGB(0, 0, im.getWidth(), im.getHeight(), null, 0, im.getWidth());
-						double[] fv = cd.getFeatureVector(pixels);
+						ImageFeatures cd = new ImageFeatures(pixels);
+						
+						if (meanFv == null) {
+							meanFv = new double[cd.getFvSize()];
+						}
+						
+						double[] fv = cd.getFeatureVector();
+						
 						c++;
+						
 						for (int i=0; i<fv.length; i++) {
 							meanFv[i] += fv[i];
 						}
+						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
