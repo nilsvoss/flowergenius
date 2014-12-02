@@ -28,7 +28,9 @@ public class MDRecognizer implements Recognizer {
 		
 		int n = list.size();
 		
-        double[] sampleFv = (new ColorDistribution()).getFeatureVector(pixels);
+		ImageFeatures f = new ImageFeatures(pixels);
+		
+        double[] sampleFv = f.getFeatureVector();
         
         Log.d("MD", "number of sample pixels: "+pixels.length);
         Log.d("MD", "number of sample features: "+sampleFv.length);

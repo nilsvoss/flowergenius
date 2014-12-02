@@ -41,7 +41,7 @@ public class Flower {
 	}
     
     public double[] getFeatureVector() {
-        int n = ColorDistribution.BINS_PER_CHANNEL; //number of features
+        int n = ImageFeatures.BINS_PER_CHANNEL; //number of features
         int o = 3;//offset in fields list
         double[] vector = new double[n*n*n];
         for (int i=0; i<n*n*n; i++) {

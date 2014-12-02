@@ -2,10 +2,22 @@ package com.tsc.FlowerGenius.brain;
 
 public class Functions {
 	
+	public static int alpha(int color) { return (color >> 24) & 0xFF; }
 	public static int red(int color) { return (color >> 16) & 0xFF; }
 	public static int green(int color) { return (color >> 8) & 0xFF; }
 	public static int blue(int color) { return color & 0xFF; }
 	public static int color(int r, int g, int b) { return (r << 16) | (g << 8) | b; }
+	public static int color(int alpha, int red, int green, int blue) {
+		int newPixel = 0;
+		newPixel += alpha;
+		newPixel = newPixel << 8;
+		newPixel += red;
+		newPixel = newPixel << 8;
+		newPixel += green;
+		newPixel = newPixel << 8;
+		newPixel += blue;
+		return newPixel;
+	}
 	public static int x(int i, int width) { return i % width; }
 	public static int y(int i, int width) { return i / width; }
 	public static int i(int x, int y, int width) { return y*width + x; }
