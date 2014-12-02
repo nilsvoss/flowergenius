@@ -39,8 +39,8 @@ public class MainActivity extends Activity {
             }
         });
         
-        final Button button2 = (Button) findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
+        final Button btnDb = (Button) findViewById(R.id.btnDb);
+        btnDb.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Intent myIntent = new Intent(v.getContext(), DatabaseActivity.class);
                 startActivityForResult(myIntent, 0);
