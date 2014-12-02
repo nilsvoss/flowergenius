@@ -38,13 +38,13 @@ public class ExtractFeatures {
 						
 						BufferedImage im = ImageIO.read(new File(filename));
 						int[] pixels = im.getRGB(0, 0, im.getWidth(), im.getHeight(), null, 0, im.getWidth());
-						ImageFeatures cd = new ImageFeatures(pixels);
+						ImageFeatures f = new ImageFeatures(pixels);
+						
+						double[] fv = f.getFeatureVector();
 						
 						if (meanFv == null) {
-							meanFv = new double[cd.getFvSize()];
+							meanFv = new double[fv.length];
 						}
-						
-						double[] fv = cd.getFeatureVector();
 						
 						c++;
 						
