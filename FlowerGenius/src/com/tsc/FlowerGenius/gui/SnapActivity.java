@@ -88,7 +88,7 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 				outputStream.write(arg0);
 				outputStream.close();
 				Bundle b = new Bundle();
-				b.putString("jpgDataFile", dtString+".jpg");
+				b.putString("jpgDataFile", outputFile.getCanonicalPath());
 				//b.putIntArray("pixels", pixels);
 				b.putInt("centerX", 5);
 				b.putInt("centerY", 5);
@@ -136,7 +136,7 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 	    //Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
 	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        camera.setDisplayOrientation(90);
+        //camera.setDisplayOrientation(90);
 	    camera.startPreview();
 	}
 

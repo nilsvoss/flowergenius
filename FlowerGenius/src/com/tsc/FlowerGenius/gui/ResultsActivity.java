@@ -3,12 +3,11 @@ package com.tsc.FlowerGenius.gui;
 import java.io.IOException;
 import java.util.List;
 
-import com.tsc.FlowerGenius.brain.DummyRecognizer;
 import com.tsc.FlowerGenius.brain.Flower;
 import com.tsc.FlowerGenius.brain.MDRecognizer;
 import com.tsc.FlowerGenius.brain.Recognizer;
-
 import com.tsc.FlowerGenius.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,9 +30,7 @@ public class ResultsActivity extends Activity {
 		final ImageView imageView1 = (ImageView) findViewById(R.id.imageView1);
 		
 		Bundle b = getIntent().getExtras();
-		//int[] pixels = b.getIntArray("pixels");
-		byte[] jpg = b.getByteArray("jpgData");
-		Bitmap im = BitmapFactory.decodeByteArray(jpg, 0, jpg.length);
+		Bitmap im = BitmapFactory.decodeFile(b.getString("jpgDataFile"));
 		
 		imageView1.setImageBitmap(im);
 		
