@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.tsc.FlowerGenius.R;
 
@@ -14,12 +14,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +31,6 @@ import android.view.MotionEvent;
 public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 
 	private Camera camera;
-	private Bitmap im;
 	private Intent resultsIntent;
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -81,7 +79,7 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 		@Override
 		public void onPictureTaken(byte[] arg0, Camera arg1) {
 			try {
-				String dtString = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime());
+				String dtString = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(Calendar.getInstance().getTime());
 				File outputDir = getBaseContext().getCacheDir();
 				File outputFile = File.createTempFile(dtString, "jpg", outputDir);
 				FileOutputStream outputStream = new FileOutputStream(outputFile);
@@ -120,12 +118,10 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 		return super.onOptionsItemSelected(item);
 	}
 
-	
-	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {       
 	    Parameters parameters = camera.getParameters();
 	    List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
-	    Camera.Size previewSize = previewSizes.get(0);
+	    Camera.Size previewSize = getOptimalPreviewSize(previewSizes,width,height);
 
 	    parameters.setPreviewSize(previewSize.width, previewSize.height);
 	    parameters.setFlashMode(Parameters.FLASH_MODE_AUTO);
@@ -133,10 +129,15 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 
 	    camera.setParameters(parameters);
 
-	    //Display display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-
 	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //camera.setDisplayOrientation(90);
+	    
+	    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+	        parameters.setRotation(90);
+	        camera.setParameters(parameters);
+	    } else {
+	        camera.setDisplayOrientation(90);
+	    }
+	    
 	    camera.startPreview();
 	}
 
@@ -157,5 +158,37 @@ public class SnapActivity extends Activity implements SurfaceHolder.Callback {
 		camera.release();
 		camera = null;
 	}
+	
+	private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio=(double)h / w;
+
+        if (sizes == null) return null;
+
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        int targetHeight = h;
+
+        for (Camera.Size size : sizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - targetHeight) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - targetHeight);
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+        }
+        return optimalSize;
+    }
 
 }

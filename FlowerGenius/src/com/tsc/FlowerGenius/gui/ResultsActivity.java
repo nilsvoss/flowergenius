@@ -32,6 +32,11 @@ public class ResultsActivity extends Activity {
 		Bundle b = getIntent().getExtras();
 		Bitmap im = BitmapFactory.decodeFile(b.getString("jpgDataFile"));
 		
+		//calculate dimensions
+		int newHeight = FlowerApp.IMAGE_HEIGHT;
+		int newWidth = im.getWidth() * FlowerApp.IMAGE_HEIGHT / im.getHeight();
+		im = Bitmap.createScaledBitmap(im, newWidth, newHeight, true);
+		
 		imageView1.setImageBitmap(im);
 		
 		int[] pixels = new int[im.getHeight() * im.getWidth()];

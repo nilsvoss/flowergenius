@@ -6,6 +6,8 @@ import android.app.Application;
 
 public class FlowerApp extends Application {
 	
+	static final int IMAGE_HEIGHT = 512;
+	
 	FlowerDatabase db;
 
 	@Override
