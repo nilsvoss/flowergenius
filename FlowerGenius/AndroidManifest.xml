@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -21,7 +21,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Black" >
         <activity
-            android:name="com.tsc.FlowerGenius.gui.MainActivity"
+            android:name=".gui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,32 +30,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tsc.FlowerGenius.gui.DatabaseActivity"
+            android:name=".gui.DatabaseActivity"
             android:label="@string/title_activity_database"
-            android:parentActivityName="com.tsc.FlowerGenius.gui.MainActivity" >
+            android:parentActivityName=".gui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tsc.FlowerGenius.gui.MainActivity" />
         </activity>
         <activity
-            android:name="com.tsc.FlowerGenius.gui.SnapActivity"
+            android:name=".gui.SnapActivity"
             android:label="@string/title_activity_snap"
-            android:parentActivityName="com.tsc.FlowerGenius.gui.MainActivity" >
+            android:parentActivityName=".gui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tsc.FlowerGenius.gui.MainActivity" />
         </activity>
         <activity
-            android:name="com.tsc.FlowerGenius.gui.ResultsActivity"
+            android:name=".gui.ResultsActivity"
             android:label="@string/title_activity_results"
-            android:parentActivityName="com.tsc.FlowerGenius.gui.SnapActivity" >
+            android:parentActivityName=".gui.SnapActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tsc.FlowerGenius.gui.SnapActivity" />
         </activity>
         <activity
-            android:name="com.tsc.FlowerGenius.gui.DetailActivity"
+            android:name=".gui.DetailActivity"
             android:label="@string/title_activity_detail" >
+        </activity>
+        <activity
+            android:name="com.tsc.FlowerGenius.gui.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".gui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tsc.FlowerGenius.gui.MainActivity" />
         </activity>
     </application>
 
