@@ -8,7 +8,7 @@ import java.util.List;
 import android.util.Log;
 
 public class MDRecognizer implements Recognizer {
-
+	
     List<Flower> list;
 
     public MDRecognizer(List<Flower> list) {
@@ -36,7 +36,7 @@ public class MDRecognizer implements Recognizer {
         
         for (int i=0; i<n; i++) {
         	
-        	double[] classFv = list.get(i).getFeatureVector();
+        	double[] classFv = list.get(i).getMeanVector();
         	fd[i] = new FlowerDistance();
             fd[i].distance = Functions.distance(sampleFv,classFv);    
             fd[i].flower = list.get(i);
