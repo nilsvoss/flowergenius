@@ -64,7 +64,6 @@ public class ImageFeatures {
 	 * Image histogram equalization
 	 *
 	 * Author: Bostjan Cigan (http://zerocool.is-a-geek.net)
-	 *
 	 */
 	private void histEq() {
 
@@ -182,8 +181,5 @@ public class ImageFeatures {
 		
 		return hist;
 	}
-
-	// Convert R, G, B, Alpha to standard 8 bit
-	
 
 }
