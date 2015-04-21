@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-
-
-import android.media.Image;
-
 public class DummyRecognizer implements Recognizer {
 	
 	FlowerDatabase db;
