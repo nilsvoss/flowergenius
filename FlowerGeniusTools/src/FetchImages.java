@@ -1,5 +1,4 @@
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,9 @@ import java.sql.Statement;
 
 import javax.imageio.ImageIO;
 
-
+/**
+ * Bilder der jeweiligen Klassen anhand Datenbank ermitteln und Bilder in entsprechenden Größen erzeugen.
+ */
 public class FetchImages {
 	
 	private static final String SRC_DIR = "/home/ts/fsinb/pictures/";
@@ -35,6 +36,7 @@ public class FetchImages {
 			Statement st1 = connect.createStatement();
 			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid FROM weights w");
 		
+			// Iteriere Klassen
 			while (ids.next()) {
 			
 				int id = ids.getInt("objectid");
@@ -42,6 +44,7 @@ public class FetchImages {
 				Statement st2 = connect.createStatement();
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" ORDER BY suitability DESC LIMIT 1");
 			
+				// Iteriere Bilder einer Klasse
 				while (pictures.next()) {
 				
 					String filename = pictures.getString("filename");				

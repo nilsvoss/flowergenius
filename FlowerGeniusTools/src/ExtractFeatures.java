@@ -16,21 +16,30 @@ public class ExtractFeatures {
 
 	public static void main(String[] args) {
 		try {
+			// connect to database
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/fsinb?user=fsinb&password=DxszzrXAwU8GmXmz");
 			
+			// load list of classes from database
 			Statement st1 = connect.createStatement();
 			ResultSet ids = st1.executeQuery("SELECT DISTINCT w.objectid,o.botname1,o.gername1 FROM weights w JOIN objects o ON (w.objectid=o.id) ORDER BY o.botname1");
 			
+			// iterate classes
 			while (ids.next()) {
 				
-				int c = 0;
 				int id = ids.getInt("objectid");
-				double[] meanFv = null;
 				
+				// print line with class data (cd)
+				System.out.print("cd;");
+				System.out.print(id + ";");
+				System.out.print(ids.getString("botname1") + ";");
+				System.out.println(ids.getString("gername1"));
+				
+				// load list of suitable pictures of the class
 				Statement st2 = connect.createStatement();
 				ResultSet pictures = st2.executeQuery("SELECT DISTINCT filename FROM pictures WHERE objectid="+id+" AND suitability>0");
-				
+
+				// itrerate pictures of one class
 				while (pictures.next()) {
 					
 					String filename = "/home/ts/fsinb/pictures/" + pictures.getString("filename");
@@ -42,15 +51,15 @@ public class ExtractFeatures {
 						
 						double[] fv = f.getFeatureVector();
 						
-						if (meanFv == null) {
-							meanFv = new double[fv.length];
-						}
-						
-						c++;
-						
+						// print feature vector of the picture (fv)
+						System.out.print("fv;");
 						for (int i=0; i<fv.length; i++) {
-							meanFv[i] += fv[i];
+							System.out.print(fv[i]);
+							if (i < (fv.length - 1)) {
+								System.out.print(";");
+							}
 						}
+						System.out.println();
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -58,20 +67,6 @@ public class ExtractFeatures {
 					}
 					
 				}
-				
-				System.out.print(id + ";");
-				System.out.print(ids.getString("botname1") + ";");
-				System.out.print(ids.getString("gername1") + ";");
-				
-				for (int i=0; i<meanFv.length; i++) {
-					meanFv[i] = meanFv[i] / (double) c;
-					System.out.print(meanFv[i]);
-					if (i < (meanFv.length - 1)) {
-						System.out.print(";");
-					}
-				}
-				
-				System.out.println();
 				
 				st2.close();
 				
