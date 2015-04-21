@@ -7,9 +7,6 @@ import java.util.List;
 
 import android.util.Log;
 
-
-
-
 public class MDRecognizer implements Recognizer {
 
     List<Flower> list;
@@ -18,7 +15,7 @@ public class MDRecognizer implements Recognizer {
         this.list = list;
     }
     
-    class FlowerDistance{
+    class FlowerDistance {
     	Flower flower;
     	double distance;
     }
