@@ -29,6 +29,9 @@ public class FetchImages {
 	public static void main(String[] args) {
 		
 		try {
+			
+			int i = 0;
+			
 			Class.forName("com.mysql.jdbc.Driver");
 		
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/fsinb?user=fsinb&password=DxszzrXAwU8GmXmz");
@@ -38,7 +41,9 @@ public class FetchImages {
 		
 			// Iteriere Klassen
 			while (ids.next()) {
-			
+				
+				i++;
+				
 				int id = ids.getInt("objectid");
 			
 				Statement st2 = connect.createStatement();
@@ -51,7 +56,8 @@ public class FetchImages {
 					String srcFilename = SRC_DIR + filename;
 					String dstFilenameS = DST_DIR + id + ".jpg";
 					String dstFilenameT = DST_DIR + id + "_120.jpg";
-					System.out.println("object: "+id+" image: "+srcFilename+", "+dstFilenameS);
+					
+					System.out.println(i+", object: "+id+" image: "+srcFilename+", "+dstFilenameS);
 				
 					BufferedImage im1 = ImageIO.read(new File(srcFilename));
 				
